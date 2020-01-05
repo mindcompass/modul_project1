@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>Bootstrap Example</title>
+<meta charset="utf-8">
+
+
+</head>
+<body>
+	<input type="text" id="videoTopic" name="videoTopic">
+	<button>비디오 검색</button>
+	<div></div>
+	<hr>
+	<script src="http://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script>
+		$('button').click(function() {
+			 console.log('click')
+			$.ajax({
+				url : '/getVideo',
+				type : 'get',
+				data : {
+					'videoTopic' : $('#videoTopic').val()
+				},
+				success : function(res) {
+					var documents = res.documents;
+					for ( var i in documents) {
+						var title = documents[i].title;
+						var thumbnail = documents[i].thumbnail;
+						var url = documents[i].url;
+						var datetime = documents[i].datetime;
+						var tag = "";
+						tag += "<ul>";
+						tag += "<li> Title : " + title + "</li>";
+						tag += "<img src =" + thumbnail +">";
+						tag += "<li> URL : " + url + "</li>";
+						tag += "<li> datetime : " + datetime + "</li>";
+						tag += "</ul>";
+						$("hr").after(tag);
+
+					}
+				}
+
+			})
+		})
+	</script>
